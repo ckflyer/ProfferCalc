@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1e40af">
-    <title>Airline Reserve Shift Navigator</title>
+    <title>Proffer Tool</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <style>
@@ -544,6 +544,7 @@
             font-weight: 700;
             color: var(--text-color);
             margin-bottom: 16px;
+            text-align: center;
         }
 
         .quick-info {
@@ -566,6 +567,81 @@
             color: #6b7280;
             font-size: 14px;
             font-family: 'Courier New', monospace;
+        }
+
+        .centered-content {
+            text-align: center;
+        }
+
+        .help-text-centered {
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        .timing-control {
+            margin-bottom: 16px;
+        }
+
+        .timing-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .timing-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .timing-value {
+            font-size: 13px;
+            color: #6b7280;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timing-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-color);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .timing-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+        }
+
+        .timing-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+        }
+
+        .share-btn {
+            width: 100%;
+            padding: 12px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 14px;
         }
 
         @media (max-width: 480px) {
@@ -596,13 +672,107 @@
         <div class="menu-section">
             <div class="menu-section-title">Crew Scheduling</div>
             <div class="menu-item">
-                <label>Login Number</label>
-                <input type="text" id="crewLoginNumber" placeholder="e.g., 12345">
-            </div>
-            <div class="menu-item">
-                <label>Phone Number</label>
+                <label>Crew Scheduling Phone</label>
                 <input type="tel" id="crewPhoneNumber" placeholder="1-800-555-1234">
             </div>
+            <div class="menu-item">
+                <label>Employee Password</label>
+                <input type="text" id="crewLoginNumber" placeholder="e.g., 12345">
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">Advanced Timing</div>
+            <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">
+                Adjust pause duration between each step (commas)
+            </p>
+            
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After Phone Number</span>
+                    <span class="timing-value" id="timing1Display">3 commas</span>
+                </div>
+                <input type="range" min="1" max="10" value="3" class="timing-slider" id="timing1" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After Password</span>
+                    <span class="timing-value" id="timing2Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing2" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After First "1"</span>
+                    <span class="timing-value" id="timing3Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing3" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After Second "1"</span>
+                    <span class="timing-value" id="timing4Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing4" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After First "2"</span>
+                    <span class="timing-value" id="timing5Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing5" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After Second "2"</span>
+                    <span class="timing-value" id="timing6Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing6" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">Between Shifts</span>
+                    <span class="timing-value" id="timing7Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing7" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After Each Shift</span>
+                    <span class="timing-value" id="timing8Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing8" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">Before "8"</span>
+                    <span class="timing-value" id="timing9Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing9" oninput="updateTimingDisplay()">
+            </div>
+
+            <div class="timing-control">
+                <div class="timing-label">
+                    <span class="timing-name">After "8"</span>
+                    <span class="timing-value" id="timing10Display">1 comma</span>
+                </div>
+                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing10" oninput="updateTimingDisplay()">
+            </div>
+
+            <button class="btn btn-secondary" onclick="resetTimings()" style="margin-top: 12px;">Reset to Defaults</button>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title">Share</div>
+            <button class="share-btn" onclick="shareApp()">📤 Share App Link</button>
         </div>
 
         <div class="menu-section">
@@ -620,7 +790,7 @@
         <div class="menu-section">
             <div class="menu-section-title">About</div>
             <p style="font-size: 13px; color: #6b7280; line-height: 1.6;">
-                Airline Reserve Shift Navigator v1.0<br>
+                Proffer Tool v2.0<br>
                 Unofficial tool for airline crew members<br><br>
                 All data stored locally on your device.
             </p>
@@ -635,8 +805,8 @@
                 <span></span>
             </button>
             <div class="header">
-                <h1>✈️ Shift Navigator</h1>
-                <p>Reserve Proffering Tool</p>
+                <h1>✈️ Proffer Tool</h1>
+                <p>Reserve Shift Selection</p>
             </div>
             <div style="width: 44px;"></div> <!-- Spacer for centering -->
         </div>
@@ -657,30 +827,22 @@
 
         <!-- Quick Info Card -->
         <div class="card">
-            <div class="section-title">📞 Quick Info</div>
-            <div class="quick-info">
-                <div class="quick-info-label">Login Number</div>
-                <div class="quick-info-value" id="displayLoginNumber">Not set</div>
-            </div>
+            <div class="section-title">Your Info</div>
             <div class="quick-info">
                 <div class="quick-info-label">Crew Scheduling</div>
                 <div class="quick-info-value" id="displayCrewPhone">Not set</div>
             </div>
-        </div>
-
-        <!-- Base Number -->
-        <div class="card">
-            <div class="input-group">
-                <label for="baseNumber">Base Phone Number</label>
-                <input type="tel" id="baseNumber" placeholder="1-800-555-1234" value="">
-                <div class="help-text">Enter the main number to call</div>
+            <div class="quick-info">
+                <div class="quick-info-label">Employee Password</div>
+                <div class="quick-info-value" id="displayLoginNumber">Not set</div>
             </div>
+            <p class="help-text-centered">Tap the menu (☰) to update your info</p>
         </div>
 
         <!-- Shift Selection -->
         <div class="card">
             <div class="section-title">Select Shifts</div>
-            <div class="help-text" style="margin-bottom: 12px;">Tap shifts in the order you want to dial them</div>
+            <p class="help-text-centered" style="margin-bottom: 16px;">Tap shifts in the order you want to proffer them</p>
             
             <div class="shifts-grid" id="shiftsGrid">
                 <!-- Shifts will be populated here -->
@@ -721,13 +883,12 @@
         <!-- Help -->
         <div class="card">
             <div class="section-title">ℹ️ How It Works</div>
-            <p style="color: #6b7280; font-size: 14px; line-height: 1.6;">
-                1. Enter the base phone number<br>
-                2. Tap shifts in the order you want to dial<br>
-                3. Add custom steps if needed<br>
-                4. The app generates a dialable number with pauses<br>
-                5. Tap "Call Now" to dial automatically<br>
-                6. Save frequently used configurations
+            <p class="centered-content" style="color: #6b7280; font-size: 14px; line-height: 1.8;">
+                1. Set your crew scheduling phone and password in settings<br>
+                2. Tap shifts in the order you want to proffer them<br>
+                3. The app builds the complete dial sequence<br>
+                4. Tap "Call Now" to dial automatically<br>
+                5. Save frequently used configurations
             </p>
         </div>
     </div>
@@ -745,6 +906,85 @@
             { name: 'STBY 2', code: '02222' },
             { name: 'STBY 3', code: '03333' }
         ];
+
+        // Timing settings
+        function getTimings() {
+            return {
+                afterPhone: parseInt(localStorage.getItem('timing1') || '3'),
+                afterPassword: parseInt(localStorage.getItem('timing2') || '1'),
+                afterFirst1: parseInt(localStorage.getItem('timing3') || '1'),
+                afterSecond1: parseInt(localStorage.getItem('timing4') || '1'),
+                afterFirst2: parseInt(localStorage.getItem('timing5') || '1'),
+                afterSecond2: parseInt(localStorage.getItem('timing6') || '1'),
+                betweenShifts: parseInt(localStorage.getItem('timing7') || '1'),
+                afterEachShift: parseInt(localStorage.getItem('timing8') || '1'),
+                before8: parseInt(localStorage.getItem('timing9') || '1'),
+                after8: parseInt(localStorage.getItem('timing10') || '1')
+            };
+        }
+
+        function saveTimings() {
+            for (let i = 1; i <= 10; i++) {
+                const value = document.getElementById(`timing${i}`).value;
+                localStorage.setItem(`timing${i}`, value);
+            }
+        }
+
+        function loadTimings() {
+            for (let i = 1; i <= 10; i++) {
+                const value = localStorage.getItem(`timing${i}`);
+                if (value) {
+                    document.getElementById(`timing${i}`).value = value;
+                }
+            }
+            updateTimingDisplay();
+        }
+
+        function updateTimingDisplay() {
+            for (let i = 1; i <= 10; i++) {
+                const slider = document.getElementById(`timing${i}`);
+                const display = document.getElementById(`timing${i}Display`);
+                const value = slider.value;
+                display.textContent = value === '1' ? '1 comma' : `${value} commas`;
+            }
+            saveTimings();
+            generateNumber();
+        }
+
+        function resetTimings() {
+            const defaults = [3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+            defaults.forEach((val, i) => {
+                document.getElementById(`timing${i + 1}`).value = val;
+                localStorage.setItem(`timing${i + 1}`, val);
+            });
+            updateTimingDisplay();
+            alert('Timings reset to defaults');
+        }
+
+        // Share function
+        function shareApp() {
+            const shareUrl = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Proffer Tool',
+                    text: 'Check out this Proffer Tool for airline crew scheduling',
+                    url: shareUrl
+                }).catch(() => {
+                    copyToClipboard(shareUrl);
+                });
+            } else {
+                copyToClipboard(shareUrl);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('App link copied to clipboard!');
+            }).catch(() => {
+                prompt('Copy this link:', text);
+            });
+        }
 
         // Theme Management
         function setTheme(theme) {
@@ -786,12 +1026,14 @@
             document.getElementById('sideMenu').classList.add('open');
             document.getElementById('menuOverlay').classList.add('show');
             loadCrewInfo();
+            loadTimings();
         }
 
         function closeMenu() {
             document.getElementById('sideMenu').classList.remove('open');
             document.getElementById('menuOverlay').classList.remove('show');
             saveCrewInfo();
+            generateNumber();
         }
 
         function loadCrewInfo() {
@@ -920,20 +1162,71 @@
         }
 
         function generateNumber() {
-            const baseNumber = document.getElementById('baseNumber').value.replace(/\D/g, '');
-            if (!baseNumber && selectedShifts.length === 0) {
+            const crewPhone = localStorage.getItem('crewPhoneNumber') || '';
+            const password = localStorage.getItem('crewLoginNumber') || '';
+            const baseNumber = crewPhone.replace(/\D/g, '');
+            
+            if (!baseNumber || selectedShifts.length === 0) {
                 document.getElementById('resultCard').style.display = 'none';
                 return;
             }
 
+            const timings = getTimings();
+            
+            // Build the sequence according to the flow:
+            // CS phone # + afterPhone + password + afterPassword + 1 + afterFirst1 + 1 + afterSecond1 + 2 + afterFirst2 + 2 + afterSecond2
             let finalNumber = baseNumber;
             
-            // Add selected shifts in order
-            selectedShifts.forEach(shift => {
-                finalNumber += ',,' + shift.code;
+            // Add pause after phone number
+            finalNumber += ','.repeat(timings.afterPhone);
+            
+            // Add password
+            finalNumber += password;
+            
+            // Add pause after password
+            finalNumber += ','.repeat(timings.afterPassword);
+            
+            // Add 1
+            finalNumber += '1';
+            finalNumber += ','.repeat(timings.afterFirst1);
+            
+            // Add 1 again
+            finalNumber += '1';
+            finalNumber += ','.repeat(timings.afterSecond1);
+            
+            // Add 2
+            finalNumber += '2';
+            finalNumber += ','.repeat(timings.afterFirst2);
+            
+            // Add 2 again
+            finalNumber += '2';
+            finalNumber += ','.repeat(timings.afterSecond2);
+            
+            // Now add each shift: shift_code + afterEachShift + 1 + betweenShifts (except last)
+            selectedShifts.forEach((shift, index) => {
+                finalNumber += shift.code;
+                finalNumber += ','.repeat(timings.afterEachShift);
+                finalNumber += '1';
+                
+                // Add betweenShifts pause if not the last shift
+                if (index < selectedShifts.length - 1) {
+                    finalNumber += ','.repeat(timings.betweenShifts);
+                }
             });
+            
+            // Add pause before 8
+            finalNumber += ','.repeat(timings.before8);
+            
+            // Add 8
+            finalNumber += '8';
+            
+            // Add pause after 8
+            finalNumber += ','.repeat(timings.after8);
+            
+            // Add 1
+            finalNumber += '1';
 
-            // Add custom menu steps
+            // Add custom menu steps if any
             const customSteps = Array.from(document.querySelectorAll('#menuSteps input'))
                 .map(input => input.value.trim())
                 .filter(val => val !== '');
@@ -950,7 +1243,7 @@
 
         function formatPhoneNumber(number) {
             // Keep commas visible in the formatted output
-            return number.replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
+            return number.replace(/^(\d{1})(\d{3})(\d{3})(\d{4})/, '$1-$2-$3-$4');
         }
 
         function copyNumber() {
@@ -972,13 +1265,11 @@
                 return;
             }
 
-            const baseNumber = document.getElementById('baseNumber').value;
             const customSteps = Array.from(document.querySelectorAll('#menuSteps input'))
                 .map(input => input.value.trim());
 
             const config = {
                 name: name,
-                baseNumber: baseNumber,
                 selectedShifts: selectedShifts.map(s => s.index),
                 customSteps: customSteps,
                 timestamp: new Date().toISOString()
@@ -998,7 +1289,7 @@
             const container = document.getElementById('savedConfigs');
 
             if (configs.length === 0) {
-                container.innerHTML = '<p style="color: #6b7280; font-size: 14px;">No saved configurations yet</p>';
+                container.innerHTML = '<p style="color: #6b7280; font-size: 14px; text-align: center;">No saved configurations yet</p>';
                 return;
             }
 
@@ -1017,8 +1308,6 @@
             const configs = JSON.parse(localStorage.getItem('phoneConfigs') || '[]');
             const config = configs[index];
 
-            document.getElementById('baseNumber').value = config.baseNumber;
-            
             // Clear existing custom steps
             document.getElementById('menuSteps').innerHTML = '';
             menuStepCount = 0;
@@ -1051,9 +1340,6 @@
             localStorage.setItem('phoneConfigs', JSON.stringify(configs));
             loadSavedConfigs();
         }
-
-        // Monitor base number changes
-        document.getElementById('baseNumber').addEventListener('input', generateNumber);
 
         // Initialize app
         initTheme();
