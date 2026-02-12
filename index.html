@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1e40af">
+    <meta name="google-adsense-account" content="ca-pub-4712560769123681">
     <title>Proffer Tool</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
@@ -683,91 +684,56 @@
 
         <div class="menu-section">
             <div class="menu-section-title">Advanced Timing</div>
-            <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">
-                Adjust pause duration between each step (commas)
-            </p>
-            
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After Phone Number</span>
-                    <span class="timing-value" id="timing1Display">3 commas</span>
+            <details style="cursor: pointer;">
+                <summary style="font-size: 14px; color: var(--text-color); font-weight: 600; padding: 12px 0;">
+                    ⚙️ Adjust Call Timing (Click to expand)
+                </summary>
+                <p style="font-size: 12px; color: #6b7280; margin: 12px 0;">
+                    Fine-tune pause durations between menu steps. Each comma = ~2 seconds.
+                </p>
+                
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">Initial Setup (After phone + password)</span>
+                        <span class="timing-value" id="timing1Display">3 commas</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="3" class="timing-slider" id="timing1" oninput="updateTimingDisplay()">
                 </div>
-                <input type="range" min="1" max="10" value="3" class="timing-slider" id="timing1" oninput="updateTimingDisplay()">
-            </div>
 
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After Password</span>
-                    <span class="timing-value" id="timing2Display">1 comma</span>
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">Menu Navigation (1, 1, 2, 2)</span>
+                        <span class="timing-value" id="timing2Display">1 comma</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing2" oninput="updateTimingDisplay()">
                 </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing2" oninput="updateTimingDisplay()">
-            </div>
 
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After First "1"</span>
-                    <span class="timing-value" id="timing3Display">1 comma</span>
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">Between Shift Entries</span>
+                        <span class="timing-value" id="timing3Display">1 comma</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing3" oninput="updateTimingDisplay()">
                 </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing3" oninput="updateTimingDisplay()">
-            </div>
 
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After Second "1"</span>
-                    <span class="timing-value" id="timing4Display">1 comma</span>
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">After Each Shift Code</span>
+                        <span class="timing-value" id="timing4Display">1 comma</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing4" oninput="updateTimingDisplay()">
                 </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing4" oninput="updateTimingDisplay()">
-            </div>
 
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After First "2"</span>
-                    <span class="timing-value" id="timing5Display">1 comma</span>
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">Final Completion (8, 1)</span>
+                        <span class="timing-value" id="timing5Display">1 comma</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing5" oninput="updateTimingDisplay()">
                 </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing5" oninput="updateTimingDisplay()">
-            </div>
 
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After Second "2"</span>
-                    <span class="timing-value" id="timing6Display">1 comma</span>
-                </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing6" oninput="updateTimingDisplay()">
-            </div>
-
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">Between Shifts</span>
-                    <span class="timing-value" id="timing7Display">1 comma</span>
-                </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing7" oninput="updateTimingDisplay()">
-            </div>
-
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After Each Shift</span>
-                    <span class="timing-value" id="timing8Display">1 comma</span>
-                </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing8" oninput="updateTimingDisplay()">
-            </div>
-
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">Before "8"</span>
-                    <span class="timing-value" id="timing9Display">1 comma</span>
-                </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing9" oninput="updateTimingDisplay()">
-            </div>
-
-            <div class="timing-control">
-                <div class="timing-label">
-                    <span class="timing-name">After "8"</span>
-                    <span class="timing-value" id="timing10Display">1 comma</span>
-                </div>
-                <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing10" oninput="updateTimingDisplay()">
-            </div>
-
-            <button class="btn btn-secondary" onclick="resetTimings()" style="margin-top: 12px;">Reset to Defaults</button>
+                <button class="btn btn-secondary" onclick="resetTimings()" style="margin-top: 12px;">Reset to Defaults</button>
+            </details>
         </div>
 
         <div class="menu-section">
@@ -816,17 +782,21 @@
             <button onclick="installApp()">Install App</button>
         </div>
 
-               <!-- Ad Space -->
+        <!-- Ad Space -->
         <div class="ad-container">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4712560769123681"
+                 crossorigin="anonymous"></script>
+            <!-- Proffer Tool Ad -->
             <ins class="adsbygoogle"
-                 style="display:inline-block;width:320px;height:50px"
+                 style="display:block"
                  data-ad-client="ca-pub-4712560769123681"
-                 data-ad-slot="PUT_YOUR_AD_SLOT_ID_HERE"></ins>
+                 data-ad-slot="auto"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
-
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
 
         <!-- Quick Info Card -->
         <div class="card">
@@ -844,21 +814,33 @@
 
         <!-- Shift Selection -->
         <div class="card">
-            <div class="section-title">Select Shifts</div>
-            <p class="help-text-centered" style="margin-bottom: 16px;">Tap shifts in the order you want to proffer them</p>
+            <div class="section-title">Select Shifts & Sequences</div>
+            <p class="help-text-centered" style="margin-bottom: 16px;">Tap shifts in preferential order. Mix reserve shifts with trip sequences.</p>
             
             <div class="shifts-grid" id="shiftsGrid">
                 <!-- Shifts will be populated here -->
             </div>
 
-            <button class="btn btn-clear" onclick="clearShiftSelection()">Clear Selection</button>
-        </div>
+            <!-- Custom Sequence Input -->
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--border-color);">
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; font-weight: 600; color: var(--text-color); font-size: 14px; margin-bottom: 8px; text-align: center;">
+                        Add Trip Sequence
+                    </label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" 
+                               id="customSequenceInput" 
+                               placeholder="e.g., 06579" 
+                               maxlength="5"
+                               onkeypress="if(event.key === 'Enter') addCustomSequence()"
+                               style="flex: 1; padding: 12px 16px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 16px; background: var(--input-bg); color: var(--text-color); text-align: center; font-family: 'Courier New', monospace;">
+                        <button class="btn btn-primary" onclick="addCustomSequence()" style="width: auto; padding: 12px 24px; margin: 0;">Add</button>
+                    </div>
+                    <p class="help-text-centered">Enter 5-digit trip sequence numbers (positions in your preference order)</p>
+                </div>
+            </div>
 
-        <!-- Custom Menu Steps (Optional) -->
-        <div class="card">
-            <div class="section-title">Additional Menu Steps (Optional)</div>
-            <div id="menuSteps"></div>
-            <button class="btn btn-primary" onclick="addMenuStep()">+ Add Custom Step</button>
+            <button class="btn btn-clear" onclick="clearShiftSelection()">Clear All Selections</button>
         </div>
 
         <!-- Result -->
@@ -910,31 +892,26 @@
             { name: 'STBY 3', code: '03333' }
         ];
 
-        // Timing settings
+        // Timing settings - simplified to 5 controls
         function getTimings() {
             return {
-                afterPhone: parseInt(localStorage.getItem('timing1') || '3'),
-                afterPassword: parseInt(localStorage.getItem('timing2') || '1'),
-                afterFirst1: parseInt(localStorage.getItem('timing3') || '1'),
-                afterSecond1: parseInt(localStorage.getItem('timing4') || '1'),
-                afterFirst2: parseInt(localStorage.getItem('timing5') || '1'),
-                afterSecond2: parseInt(localStorage.getItem('timing6') || '1'),
-                betweenShifts: parseInt(localStorage.getItem('timing7') || '1'),
-                afterEachShift: parseInt(localStorage.getItem('timing8') || '1'),
-                before8: parseInt(localStorage.getItem('timing9') || '1'),
-                after8: parseInt(localStorage.getItem('timing10') || '1')
+                initial: parseInt(localStorage.getItem('timing1') || '3'),      // After phone + password
+                menuNav: parseInt(localStorage.getItem('timing2') || '1'),      // Between menu presses (1,1,2,2)
+                betweenShifts: parseInt(localStorage.getItem('timing3') || '1'), // Between shift entries
+                afterShift: parseInt(localStorage.getItem('timing4') || '1'),    // After each shift code
+                final: parseInt(localStorage.getItem('timing5') || '1')         // Final (8, 1)
             };
         }
 
         function saveTimings() {
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= 5; i++) {
                 const value = document.getElementById(`timing${i}`).value;
                 localStorage.setItem(`timing${i}`, value);
             }
         }
 
         function loadTimings() {
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= 5; i++) {
                 const value = localStorage.getItem(`timing${i}`);
                 if (value) {
                     document.getElementById(`timing${i}`).value = value;
@@ -944,7 +921,7 @@
         }
 
         function updateTimingDisplay() {
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= 5; i++) {
                 const slider = document.getElementById(`timing${i}`);
                 const display = document.getElementById(`timing${i}Display`);
                 const value = slider.value;
@@ -955,7 +932,7 @@
         }
 
         function resetTimings() {
-            const defaults = [3, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+            const defaults = [3, 1, 1, 1, 1];
             defaults.forEach((val, i) => {
                 document.getElementById(`timing${i + 1}`).value = val;
                 localStorage.setItem(`timing${i + 1}`, val);
@@ -1082,14 +1059,43 @@
                 selectedShifts.splice(shiftIndex, 1);
             } else {
                 // Add shift
-                selectedShifts.push({ index, ...shift });
+                selectedShifts.push({ index, ...shift, isCustom: false });
             }
             
             updateShiftDisplay();
             generateNumber();
         }
 
+        function addCustomSequence() {
+            const input = document.getElementById('customSequenceInput');
+            const sequence = input.value.trim();
+            
+            if (!sequence) {
+                alert('Please enter a sequence number');
+                return;
+            }
+            
+            if (!/^\d{5}$/.test(sequence)) {
+                alert('Sequence must be exactly 5 digits');
+                return;
+            }
+            
+            // Add custom sequence to selected shifts
+            selectedShifts.push({
+                index: -1,
+                name: `Trip ${sequence}`,
+                code: sequence,
+                isCustom: true
+            });
+            
+            input.value = '';
+            updateShiftDisplay();
+            generateNumber();
+            alert('Trip sequence added!');
+        }
+
         function updateShiftDisplay() {
+            // Update predefined shifts
             availableShifts.forEach((shift, index) => {
                 const card = document.querySelector(`[data-shift-index="${index}"]`);
                 const orderBadge = card.querySelector('.shift-order');
@@ -1103,6 +1109,35 @@
                     orderBadge.textContent = '';
                 }
             });
+            
+            // Update custom sequences display in grid (add them dynamically)
+            const customShifts = selectedShifts.filter(s => s.isCustom);
+            const grid = document.getElementById('shiftsGrid');
+            
+            // Remove existing custom shift cards
+            grid.querySelectorAll('.shift-card.custom-sequence').forEach(card => card.remove());
+            
+            // Add custom shift cards
+            customShifts.forEach((shift, customIndex) => {
+                const overallIndex = selectedShifts.indexOf(shift);
+                const card = document.createElement('div');
+                card.className = 'shift-card selected custom-sequence';
+                card.innerHTML = `
+                    <div class="shift-order">${overallIndex + 1}</div>
+                    <div class="shift-name">${shift.name}</div>
+                    <div class="shift-code">${shift.code}</div>
+                `;
+                card.onclick = () => removeCustomSequence(overallIndex);
+                grid.appendChild(card);
+            });
+        }
+
+        function removeCustomSequence(overallIndex) {
+            if (confirm('Remove this trip sequence?')) {
+                selectedShifts.splice(overallIndex, 1);
+                updateShiftDisplay();
+                generateNumber();
+            }
         }
 
         function clearShiftSelection() {
@@ -1137,33 +1172,6 @@
                 .catch(err => console.log('Service Worker registration failed'));
         }
 
-        function addMenuStep() {
-            menuStepCount++;
-            const stepDiv = document.createElement('div');
-            stepDiv.className = 'menu-step';
-            stepDiv.id = `step-${menuStepCount}`;
-            stepDiv.innerHTML = `
-                <div class="menu-step-header">
-                    <span class="menu-step-label">Step ${menuStepCount}</span>
-                    <button class="remove-btn" onclick="removeStep(${menuStepCount})">Remove</button>
-                </div>
-                <input type="text" 
-                       placeholder="Enter menu option (e.g., 1, 2, 3)" 
-                       onchange="generateNumber()"
-                       data-step="${menuStepCount}">
-                <div class="help-text">Custom menu step</div>
-            `;
-            document.getElementById('menuSteps').appendChild(stepDiv);
-        }
-
-        function removeStep(stepId) {
-            const step = document.getElementById(`step-${stepId}`);
-            if (step) {
-                step.remove();
-                generateNumber();
-            }
-        }
-
         function generateNumber() {
             const crewPhone = localStorage.getItem('crewPhoneNumber') || '';
             const password = localStorage.getItem('crewLoginNumber') || '';
@@ -1176,41 +1184,28 @@
 
             const timings = getTimings();
             
-            // Build the sequence according to the flow:
-            // CS phone # + afterPhone + password + afterPassword + 1 + afterFirst1 + 1 + afterSecond1 + 2 + afterFirst2 + 2 + afterSecond2
+            // Build the sequence:
+            // CS phone # + initial + password + menuNav + 1 + menuNav + 1 + menuNav + 2 + menuNav + 2
             let finalNumber = baseNumber;
             
-            // Add pause after phone number
-            finalNumber += ','.repeat(timings.afterPhone);
+            // Add initial pause (after phone number)
+            finalNumber += ','.repeat(timings.initial);
             
             // Add password (if provided)
             if (password) {
                 finalNumber += password;
             }
             
-            // Add pause after password
-            finalNumber += ','.repeat(timings.afterPassword);
+            // Menu navigation: 1, 1, 2, 2
+            finalNumber += ','.repeat(timings.menuNav) + '1';
+            finalNumber += ','.repeat(timings.menuNav) + '1';
+            finalNumber += ','.repeat(timings.menuNav) + '2';
+            finalNumber += ','.repeat(timings.menuNav) + '2';
             
-            // Add 1
-            finalNumber += '1';
-            finalNumber += ','.repeat(timings.afterFirst1);
-            
-            // Add 1 again
-            finalNumber += '1';
-            finalNumber += ','.repeat(timings.afterSecond1);
-            
-            // Add 2
-            finalNumber += '2';
-            finalNumber += ','.repeat(timings.afterFirst2);
-            
-            // Add 2 again
-            finalNumber += '2';
-            finalNumber += ','.repeat(timings.afterSecond2);
-            
-            // Now add each shift: shift_code + afterEachShift + 1 + betweenShifts (except last)
+            // Now add each shift/sequence: shift_code + afterShift + 1 + betweenShifts (except last)
             selectedShifts.forEach((shift, index) => {
                 finalNumber += shift.code;
-                finalNumber += ','.repeat(timings.afterEachShift);
+                finalNumber += ','.repeat(timings.afterShift);
                 finalNumber += '1';
                 
                 // Add betweenShifts pause if not the last shift
@@ -1219,26 +1214,11 @@
                 }
             });
             
-            // Add pause before 8
-            finalNumber += ','.repeat(timings.before8);
-            
-            // Add 8
+            // Final completion: 8, 1
+            finalNumber += ','.repeat(timings.final);
             finalNumber += '8';
-            
-            // Add pause after 8
-            finalNumber += ','.repeat(timings.after8);
-            
-            // Add 1
+            finalNumber += ','.repeat(timings.final);
             finalNumber += '1';
-
-            // Add custom menu steps if any
-            const customSteps = Array.from(document.querySelectorAll('#menuSteps input'))
-                .map(input => input.value.trim())
-                .filter(val => val !== '');
-            
-            customSteps.forEach(step => {
-                finalNumber += ',,' + step;
-            });
 
             // Format for display
             const formatted = formatPhoneNumber(finalNumber);
@@ -1270,13 +1250,14 @@
                 return;
             }
 
-            const customSteps = Array.from(document.querySelectorAll('#menuSteps input'))
-                .map(input => input.value.trim());
-
             const config = {
                 name: name,
-                selectedShifts: selectedShifts.map(s => s.index),
-                customSteps: customSteps,
+                selectedShifts: selectedShifts.map(s => ({
+                    index: s.index,
+                    code: s.code,
+                    name: s.name,
+                    isCustom: s.isCustom || false
+                })),
                 timestamp: new Date().toISOString()
             };
 
@@ -1313,25 +1294,25 @@
             const configs = JSON.parse(localStorage.getItem('phoneConfigs') || '[]');
             const config = configs[index];
 
-            // Clear existing custom steps
-            document.getElementById('menuSteps').innerHTML = '';
-            menuStepCount = 0;
-
-            // Load saved shifts
+            // Load saved shifts and sequences
             selectedShifts = [];
-            config.selectedShifts.forEach(shiftIndex => {
-                selectedShifts.push({ index: shiftIndex, ...availableShifts[shiftIndex] });
-            });
-            updateShiftDisplay();
-
-            // Add saved custom steps
-            config.customSteps.forEach(stepValue => {
-                if (stepValue) {
-                    addMenuStep();
-                    const inputs = document.querySelectorAll('#menuSteps input');
-                    inputs[inputs.length - 1].value = stepValue;
+            config.selectedShifts.forEach(shift => {
+                if (shift.isCustom) {
+                    selectedShifts.push({
+                        index: -1,
+                        name: shift.name,
+                        code: shift.code,
+                        isCustom: true
+                    });
+                } else {
+                    selectedShifts.push({ 
+                        index: shift.index, 
+                        ...availableShifts[shift.index],
+                        isCustom: false
+                    });
                 }
             });
+            updateShiftDisplay();
 
             generateNumber();
             window.scrollTo(0, 0);
