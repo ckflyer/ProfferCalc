@@ -760,6 +760,52 @@
         </div>
 
         <div class="menu-section">
+            <div class="menu-section-title">Advanced Settings</div>
+            <details style="cursor: pointer;">
+                <summary style="font-size: 14px; color: var(--text-color); font-weight: 600; padding: 12px 0;">
+                    ⚙️ Fine-Tune Call Timing (Click to expand)
+                </summary>
+                <p style="font-size: 12px; color: #6b7280; margin: 12px 0;">
+                    Adjust pause durations if needed. Defaults are optimized. Each comma ≈ 2 seconds.
+                </p>
+                
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">After Phone Number</span>
+                        <span class="timing-value" id="timing1Display">3 commas</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="3" class="timing-slider" id="timing1" oninput="updateTimingDisplay()">
+                </div>
+
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">After Password</span>
+                        <span class="timing-value" id="timing2Display">2 commas</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="2" class="timing-slider" id="timing2" oninput="updateTimingDisplay()">
+                </div>
+
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">Standard Pauses (menu, shifts, etc)</span>
+                        <span class="timing-value" id="timing3Display">1 comma</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="1" class="timing-slider" id="timing3" oninput="updateTimingDisplay()">
+                </div>
+
+                <div class="timing-control">
+                    <div class="timing-label">
+                        <span class="timing-name">Per Sequence Before Final Submit</span>
+                        <span class="timing-value" id="timing4Display">2 commas</span>
+                    </div>
+                    <input type="range" min="1" max="10" value="2" class="timing-slider" id="timing4" oninput="updateTimingDisplay()">
+                </div>
+
+                <button class="btn btn-secondary" onclick="resetTimings()" style="margin-top: 12px;">Reset to Optimized Defaults</button>
+            </details>
+        </div>
+
+        <div class="menu-section">
             <div class="menu-section-title">Share</div>
             <button class="share-btn" onclick="shareApp()">📤 Share App Link</button>
         </div>
@@ -923,32 +969,54 @@
             { name: 'STBY 3', code: '03333' }
         ];
 
-        // Timing settings - Fixed based on user's requirements
+        // Timing settings - adjustable with optimized defaults
         function getTimings() {
             const numSequences = selectedShifts.length;
             return {
-                afterPhone: 3,           // Always 3 commas after phone
-                afterPassword: 2,        // Always 2 commas after password
-                standard: 1,             // 1 comma for everything else (menu nav, between shifts, etc)
-                beforeFinalSubmit: numSequences * 2  // 2 commas per sequence before final "1"
+                afterPhone: parseInt(localStorage.getItem('timing1') || '3'),
+                afterPassword: parseInt(localStorage.getItem('timing2') || '2'),
+                standard: parseInt(localStorage.getItem('timing3') || '1'),
+                perSequence: parseInt(localStorage.getItem('timing4') || '2'),
+                beforeFinalSubmit: numSequences * parseInt(localStorage.getItem('timing4') || '2')
             };
         }
 
-        // No need for these timing functions anymore since timings are fixed
         function saveTimings() {
-            // Timings are now hardcoded, but keep function for compatibility
+            for (let i = 1; i <= 4; i++) {
+                const value = document.getElementById(`timing${i}`).value;
+                localStorage.setItem(`timing${i}`, value);
+            }
         }
 
         function loadTimings() {
-            // Timings are now hardcoded, but keep function for compatibility  
+            for (let i = 1; i <= 4; i++) {
+                const value = localStorage.getItem(`timing${i}`);
+                if (value) {
+                    document.getElementById(`timing${i}`).value = value;
+                }
+            }
+            updateTimingDisplay();
         }
 
         function updateTimingDisplay() {
-            // Timings are now hardcoded, but keep function for compatibility
+            for (let i = 1; i <= 4; i++) {
+                const slider = document.getElementById(`timing${i}`);
+                const display = document.getElementById(`timing${i}Display`);
+                const value = slider.value;
+                display.textContent = value === '1' ? '1 comma' : `${value} commas`;
+            }
+            saveTimings();
+            generateNumber();
         }
 
         function resetTimings() {
-            alert('Timings are now optimized and fixed based on your testing!');
+            const defaults = [3, 2, 1, 2]; // Optimized defaults
+            defaults.forEach((val, i) => {
+                document.getElementById(`timing${i + 1}`).value = val;
+                localStorage.setItem(`timing${i + 1}`, val);
+            });
+            updateTimingDisplay();
+            alert('Timings reset to optimized defaults');
         }
 
         // Share function
@@ -1203,7 +1271,8 @@
             const baseNumber = crewPhone.replace(/\D/g, '');
             const autoSubmit = document.getElementById('autoSubmitCheckbox').checked;
             
-            if (!baseNumber || selectedShifts.length === 0) {
+            // Show what we have so far, even if incomplete
+            if (!baseNumber && !password && selectedShifts.length === 0) {
                 document.getElementById('resultNumber').textContent = 'Enter phone & password in settings, then select shifts';
                 document.getElementById('callSection').style.display = 'none';
                 return;
@@ -1211,58 +1280,73 @@
 
             const timings = getTimings();
             
-            // Build the sequence with new timing:
-            // Phone,,,Password,,1,1,2,2,sequence,1,sequence,1,sequence,,8,,,,,,1 (if auto-submit)
-            let finalNumber = baseNumber;
+            // Build the sequence progressively
+            let finalNumber = '';
             
-            // After phone: 3 commas
-            finalNumber += ','.repeat(timings.afterPhone);
-            
-            // Add password
-            if (password) {
-                finalNumber += password;
-            }
-            
-            // After password: 2 commas
-            finalNumber += ','.repeat(timings.afterPassword);
-            
-            // Menu navigation: 1,1,2,2 (1 comma between each)
-            finalNumber += '1';
-            finalNumber += ','.repeat(timings.standard) + '1';
-            finalNumber += ','.repeat(timings.standard) + '2';
-            finalNumber += ','.repeat(timings.standard) + '2';
-            
-            // Add comma before first shift
-            finalNumber += ','.repeat(timings.standard);
-            
-            // Add each shift/sequence
-            selectedShifts.forEach((shift, index) => {
-                finalNumber += shift.code;
-                finalNumber += ','.repeat(timings.standard);
+            // Start with phone if available
+            if (baseNumber) {
+                finalNumber = baseNumber;
                 
-                // If NOT the last shift, add "1" (meaning "add another")
-                if (index < selectedShifts.length - 1) {
-                    finalNumber += '1';
-                    finalNumber += ','.repeat(timings.standard);
+                // After phone: 3 commas (or configured)
+                finalNumber += ','.repeat(timings.afterPhone);
+                
+                // Add password if available
+                if (password) {
+                    finalNumber += password;
                 }
-            });
-            
-            // After last sequence: 8 (done)
-            finalNumber += ','.repeat(timings.standard);
-            finalNumber += '8';
-            
-            // Before final "1": 2 commas per sequence
-            finalNumber += ','.repeat(timings.beforeFinalSubmit);
-            
-            // Final "1" (post proffer) - only if auto-submit is checked
-            if (autoSubmit) {
+                
+                // After password: 2 commas (or configured)
+                finalNumber += ','.repeat(timings.afterPassword);
+                
+                // Menu navigation: 1,1,2,2 (1 comma between each)
                 finalNumber += '1';
+                finalNumber += ','.repeat(timings.standard) + '1';
+                finalNumber += ','.repeat(timings.standard) + '2';
+                finalNumber += ','.repeat(timings.standard) + '2';
+                
+                // Only continue if we have shifts
+                if (selectedShifts.length > 0) {
+                    // Add comma before first shift
+                    finalNumber += ','.repeat(timings.standard);
+                    
+                    // Add each shift/sequence
+                    selectedShifts.forEach((shift, index) => {
+                        finalNumber += shift.code;
+                        finalNumber += ','.repeat(timings.standard);
+                        
+                        // If NOT the last shift, add "1" (meaning "add another")
+                        if (index < selectedShifts.length - 1) {
+                            finalNumber += '1';
+                            finalNumber += ','.repeat(timings.standard);
+                        }
+                    });
+                    
+                    // After last sequence: 8 (done)
+                    finalNumber += ','.repeat(timings.standard);
+                    finalNumber += '8';
+                    
+                    // Before final "1": configured commas per sequence
+                    finalNumber += ','.repeat(timings.beforeFinalSubmit);
+                    
+                    // Final "1" (post proffer) - only if auto-submit is checked
+                    if (autoSubmit) {
+                        finalNumber += '1';
+                    }
+                }
+            } else {
+                finalNumber = 'Phone number needed in settings';
             }
 
             // Format for display
-            const formatted = formatPhoneNumber(finalNumber);
+            const formatted = finalNumber.includes('needed') ? finalNumber : formatPhoneNumber(finalNumber);
             document.getElementById('resultNumber').textContent = formatted;
-            document.getElementById('callSection').style.display = 'block';
+            
+            // Only show call buttons if we have complete data
+            if (baseNumber && selectedShifts.length > 0) {
+                document.getElementById('callSection').style.display = 'block';
+            } else {
+                document.getElementById('callSection').style.display = 'none';
+            }
         }
 
         // New function for confirm call (CS phone + password + 1,1,1)
@@ -1394,6 +1478,19 @@
         initShifts();
         loadSavedConfigs();
         updateQuickInfo();
+        loadTimings();
+        generateNumber(); // Generate initial display
+        
+        // Check for install banner on iOS Safari
+        if (window.navigator.standalone === false) {
+            // Not installed on iOS, show banner after short delay
+            setTimeout(() => {
+                const dismissed = localStorage.getItem('installBannerDismissed');
+                if (!dismissed) {
+                    document.getElementById('installBanner').style.display = 'flex';
+                }
+            }, 2000);
+        }
     </script>
 </body>
 </html>
