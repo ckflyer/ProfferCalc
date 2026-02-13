@@ -751,16 +751,6 @@
     <!-- Side Menu -->
     <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
     
-    <!-- Install Banner -->
-    <div class="install-banner" id="installBanner">
-        <div class="install-banner-content">
-            <strong>📱 Install ProfferCalc</strong><br>
-            <small>Add to home screen for quick access</small>
-        </div>
-        <button onclick="installApp()">Install</button>
-        <button class="close-banner" onclick="dismissInstallBanner()">×</button>
-    </div>
-    
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
             <div class="menu-title">Settings</div>
@@ -855,7 +845,7 @@
                 ProfferCalc v1.0<br>
                 Unofficial tool for the proffering airline crew members<br><br>
                 Nothing is stored in the cloud. All data stored locally on your device and your device ONLY.<br><br>
-                For bugs and issues, contact me here: <a href="mailto:proffercalc@gmail.com" style="color: #3b82f6; text-decoration: none;">proffercalc@gmail.com</a>
+                For bugs and issues, contact me here: <a href="/cdn-cgi/l/email-protection#cdbdbfa2ababa8bfaeaca1ae8daaa0aca4a1e3aea2a0" style="color: #3b82f6; text-decoration: none;"><span class="__cf_email__" data-cfemail="cfbfbda0a9a9aabdacaea3ac8fa8a2aea6a3e1aca0a2">[email&#160;protected]</span></a>
             </p>
         </div>
     </div>
@@ -961,7 +951,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let menuStepCount = 0;
         let deferredPrompt;
         let selectedShifts = [];
@@ -1048,21 +1038,6 @@
             }).catch(() => {
                 prompt('Copy this link:', text);
             });
-        }
-
-        // Install banner functions
-        function showInstallBanner() {
-            const banner = document.getElementById('installBanner');
-            const dismissed = localStorage.getItem('installBannerDismissed');
-            
-            if (!dismissed && deferredPrompt) {
-                banner.style.display = 'flex';
-            }
-        }
-
-        function dismissInstallBanner() {
-            document.getElementById('installBanner').style.display = 'none';
-            localStorage.setItem('installBannerDismissed', 'true');
         }
 
         // Theme Management
@@ -1245,24 +1220,12 @@
             generateNumber();
         }
 
-        // PWA Install Prompt
+        // PWA Support - Let browser show native install prompts
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
+            // Store for potential future use, but don't prevent default
+            // This allows native iOS/Android prompts to show
             deferredPrompt = e;
-            showInstallBanner();
         });
-
-        function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        dismissInstallBanner();
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        }
 
         // Register Service Worker
         if ('serviceWorker' in navigator) {
@@ -1486,17 +1449,6 @@
         updateQuickInfo();
         loadTimings();
         generateNumber(); // Generate initial display
-        
-        // Check for install banner on iOS Safari
-        if (window.navigator.standalone === false) {
-            // Not installed on iOS, show banner after short delay
-            setTimeout(() => {
-                const dismissed = localStorage.getItem('installBannerDismissed');
-                if (!dismissed) {
-                    document.getElementById('installBanner').style.display = 'flex';
-                }
-            }, 2000);
-        }
     </script>
 </body>
 </html>
