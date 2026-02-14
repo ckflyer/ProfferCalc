@@ -845,7 +845,7 @@
                 ProfferCalc v1.0<br>
                 Unofficial tool for the proffering airline crew members<br><br>
                 Nothing is stored in the cloud. All data stored locally on your device and your device ONLY.<br><br>
-                For bugs and issues, contact me here: <a href="mailto:proffercalc@gmail.com" style="color: #3b82f6; text-decoration: none;">proffercalc@gmail.com</a>
+                For bugs and issues, contact me here: <a href="/cdn-cgi/l/email-protection#5f2f2d3039393a2d3c3e333c1f38323e3633713c3032" style="color: #3b82f6; text-decoration: none;"><span class="__cf_email__" data-cfemail="374745585151524554565b5477505a565e5b1954585a">[email&#160;protected]</span></a>
             </p>
         </div>
     </div>
@@ -951,7 +951,7 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let menuStepCount = 0;
         let deferredPrompt;
         let selectedShifts = [];
@@ -1424,7 +1424,17 @@
                         index: shift.index, 
                         ...availableShifts[shift.index],
                         isCustom: false
-   iguration?')) return;
+                    });
+                }
+            });
+            updateShiftDisplay();
+
+            generateNumber();
+            window.scrollTo(0, 0);
+        }
+
+        function deleteConfig(index) {
+            if (!confirm('Delete this configuration?')) return;
 
             let configs = JSON.parse(localStorage.getItem('phoneConfigs') || '[]');
             configs.splice(index, 1);
@@ -1438,7 +1448,7 @@
         loadSavedConfigs();
         updateQuickInfo();
         loadTimings();
-        generateNumber(); // Generate initial display
+        generateNumber();
     </script>
 </body>
 </html>
