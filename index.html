@@ -845,7 +845,7 @@
                 ProfferCalc v1.0<br>
                 Unofficial tool for the proffering airline crew members<br><br>
                 Nothing is stored in the cloud. All data stored locally on your device and your device ONLY.<br><br>
-                For bugs and issues, contact me here: <a href="/cdn-cgi/l/email-protection#abdbd9c4cdcdced9c8cac7c8ebccc6cac2c785c8c4c6" style="color: #3b82f6; text-decoration: none;"><span class="__cf_email__" data-cfemail="09797b666f6f6c7b6a68656a496e64686065276a6664">[email&#160;protected]</span></a>
+                For bugs and issues, contact me here: <a href="mailto:proffercalc@gmail.com" style="color: #3b82f6; text-decoration: none;">proffercalc@gmail.com</a>
             </p>
         </div>
     </div>
@@ -1424,19 +1424,21 @@
                         index: shift.index, 
                         ...availableShifts[shift.index],
                         isCustom: false
-                    });
-                }
-            });
-            updateShiftDisplay();
-
-            generateNumber();
-            window.scrollTo(0, 0);
-        }
-
-        function deleteConfig(index) {
-            if (!confirm('Delete this configuration?')) return;
+   iguration?')) return;
 
             let configs = JSON.parse(localStorage.getItem('phoneConfigs') || '[]');
             configs.splice(index, 1);
             localStorage.setItem('phoneConfigs', JSON.stringify(configs));
-            loadSavedConfig
+            loadSavedConfigs();
+        }
+
+        // Initialize app
+        initTheme();
+        initShifts();
+        loadSavedConfigs();
+        updateQuickInfo();
+        loadTimings();
+        generateNumber(); // Generate initial display
+    </script>
+</body>
+</html>
