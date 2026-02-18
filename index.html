@@ -877,6 +877,22 @@
             <p class="help-text-centered">Tap the menu (☰) to update your info</p>
         </div>
 
+        <!-- ============================================================
+             ANNOUNCEMENTS / NEWS SECTION
+             To show a message, uncomment the card block below and edit
+             the content. Recomment it when done.
+
+        <div class="card" style="border-left: 4px solid #f59e0b;">
+            <div class="section-title" style="color: #f59e0b;">📢 Announcement</div>
+            <p style="color: var(--text-color); font-size: 14px; line-height: 1.6; text-align: center;">
+                Your message here. Can be multiple lines.<br>
+                <strong>Bold text like this.</strong><br>
+                Updated: January 1, 2025
+            </p>
+        </div>
+
+        ============================================================ -->
+
         <!-- Shift Selection -->
         <div class="card">
             <div class="section-title">Select Shifts & Sequences</div>
@@ -1449,6 +1465,13 @@
         updateQuickInfo();
         loadTimings();
         generateNumber();
+
+        // Register Service Worker (enables PWA install, clears old caches)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW registered'))
+                .catch(err => console.log('SW failed:', err));
+        }
     </script>
 </body>
 </html>

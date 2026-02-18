@@ -1,64 +1,25 @@
-const CACHE_NAME = "proffercalc-v4"; // <-- bump this whenever you deploy changes
-const urlsToCache = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/icon192.png",
-  "/icon512.png",
-];
+// ProfferCalc Service Worker - Minimal
+// No app caching - app requires network to make calls anyway
+// localStorage handles all user data (phone, password, configs)
 
-// Install: cache the core app shell
+const CACHE_NAME = "proffercalc-v5";
+
+// Install - nothing to cache
 self.addEventListener("install", (event) => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
-  );
 });
 
-// Activate: delete old caches + take control immediately
+// Activate - clear ALL old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) return caches.delete(cacheName);
-        })
-      )
-    )
+      Promise.all(cacheNames.map((name) => caches.delete(name)))
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch:
-// - For page navigations (index.html / "/"): NETWORK FIRST so you get the latest version
-// - For everything else: CACHE FIRST for speed/offline
+// Fetch - always go to network, no caching
+// This ensures users always get the latest version
 self.addEventListener("fetch", (event) => {
-  const req = event.request;
-
-  // Any navigation request (loading the app shell)
-  if (req.mode === "navigate") {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-          return res;
-        })
-        .catch(() => caches.match(req).then((r) => r || caches.match("/index.html")))
-    );
-    return;
-  }
-
-  // Other requests (icons, css, js, etc.)
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-
-      return fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-        return res;
-      });
-    })
-  );
+  event.respondWith(fetch(event.request));
 });
