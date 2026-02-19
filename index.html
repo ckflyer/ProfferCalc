@@ -6,6 +6,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#1e40af">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ProfferCalc</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon192.png">
@@ -842,7 +845,7 @@
         <div class="menu-section">
             <div class="menu-section-title">About</div>
             <p style="font-size: 13px; color: #6b7280; line-height: 1.6;">
-                ProfferCalc v1.0<br>
+                ProfferCalc v1.0.1<br>
                 Unofficial tool for the proffering airline crew members<br><br>
                 Nothing is stored in the cloud. All data stored locally on your device and your device ONLY.<br><br>
                 For bugs and issues, contact me here: <a href="/cdn-cgi/l/email-protection#5f2f2d3039393a2d3c3e333c1f38323e3633713c3032" style="color: #3b82f6; text-decoration: none;"><span class="__cf_email__" data-cfemail="374745585151524554565b5477505a565e5b1954585a">[email&#160;protected]</span></a>
@@ -859,7 +862,7 @@
             </button>
             <div class="header">
                 <h1>ProfferCalc</h1>
-                <p>Reserve Shift Proffering Tool TEST2</p>
+                <p>Reserve Shift Proffering Tool</p>
             </div>
             <div style="width: 44px;"></div> <!-- Spacer for centering -->
         </div>
@@ -1466,12 +1469,34 @@
         loadTimings();
         generateNumber();
 
-        // Register Service Worker (enables PWA install, clears old caches)
+        // Register Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js')
                 .then(reg => console.log('SW registered'))
                 .catch(err => console.log('SW failed:', err));
         }
+
+        // Auto-update: Check version.json every 30 seconds
+        let currentVersion = null;
+        
+        function checkForUpdate() {
+            fetch('./version.json?t=' + Date.now())
+                .then(r => r.json())
+                .then(data => {
+                    if (currentVersion === null) {
+                        // First load - just store the version
+                        currentVersion = data.version;
+                    } else if (data.version !== currentVersion) {
+                        // Version changed - reload to get new code
+                        console.log('Update detected, reloading...');
+                        window.location.reload(true);
+                    }
+                })
+                .catch(() => {}); // Silently fail if offline
+        }
+        
+        checkForUpdate();
+        setInterval(checkForUpdate, 30 * 1000);
     </script>
 </body>
 </html>
