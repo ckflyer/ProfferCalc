@@ -2,7 +2,7 @@
 // No app caching - app requires network to make calls anyway
 // localStorage handles all user data (phone, password, configs)
 
-const CACHE_NAME = "proffercalc-v1.000000000000000000000000000000000000000000000000000000000000";
+const CACHE_NAME = "proffercalc-v1.000000000000000000000000000000000000000000000000000000000001";
 
 // Install - nothing to cache
 self.addEventListener("install", (event) => {
